@@ -1,0 +1,15 @@
+📄 FarmTech Solutions — Descrição do Projeto
+
+Contexto
+A FarmTech Solutions fechou um contrato com uma fazenda que busca migrar para a Agricultura Digital. A equipe de 
+desenvolvimento ficou responsável por criar uma aplicação em Python com suporte a culturas agrícolas, cálculo de 
+áreas e manejo de insumos, além de uma aplicação complementar em R para análise estatística e dados climáticos.
+
+Culturas Escolhidas
+O projeto dará suporte a duas culturas: café e milho, culturas amplamente presentes no cenário agrícola brasileiro
+e relevantes para o contexto de inovação da fazenda cliente.
+
+Cálculo de Área de Plantio
+A figura geométrica adotada para ambas as culturas é o retângulo. As dimensões definidas são 12.000m² de 
+comprimento por 7.000m² de largura, resultando em uma área total de 84.000.000 m² de plantio. A fórmula aplicada 
+é a clássica área = comprimento × largura.
