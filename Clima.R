@@ -1,11 +1,14 @@
-#Arquivo R para obter dados climáticos usando a API Open-Meteo
-#Usei as coordenadas de Machado-MG que foi uma cidade onde morei e possui plantação das culturas
+# Arquivo R para obter dados climáticos usando a API Open-Meteo
+# Coordenadas de Machado - MG
 
-# Coordenadas (MG - Minas Gerais)
-latitude <- -23.55
-longitude <- -46.63
+library(httr)
+library(jsonlite)
 
-cat("📍 Local: São Paulo\n")
+# Coordenadas (Machado - MG)
+latitude <- -21.67
+longitude <- -45.92
+
+cat("Local: Machado - MG\n")
 
 # URL da API Open-Meteo
 url <- paste0(
