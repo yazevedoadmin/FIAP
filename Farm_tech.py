@@ -1,15 +1,15 @@
 # Projeto: Farm Tech Fase 1 - IA
 
-print("🚀 VERSAO NOVA RODANDO")
-
 import math
 import csv
+import os
 
 # Vetores de armazenamento
 registros_cultura = []
 registros_area = []
 registros_ruas = []
 registros_pulverizacao = []
+registros_area_pulverizada = []
 
 def entrada_dados():
     Cultura1 = input("Digite a cultura 1: ")
@@ -22,19 +22,19 @@ def entrada_dados():
     print(f"Area total {areaTotal:.2f} em metros quadrados.")
 
     areaPorParte = areaTotal / 3
+    area_pulverizada = areaPorParte * 2
     larguraCultura = areaPorParte / comprimentoArea
     numeroRuas1 = math.ceil(larguraCultura / espacamentoRuas)
     pulverizacao1 = (numeroRuas1 * Pulverizacao) / 1000
     numeroRuas2 = math.ceil(larguraCultura / espacamentoRuas)
     pulverizacao2 = (numeroRuas2 * Pulverizacao) / 1000
-    print("\resultado da pulverizacao:")
-    print(f"{Cultura1}: {numeroRuas1} ruas | {pulverizacao1:.2f} L")
-    print(f"{Cultura2}: {numeroRuas2} ruas | {pulverizacao2:.2f} L")
+    print("\nresultado da pulverizacao:")
 
     registros_cultura.append((Cultura1, Cultura2))
     registros_area.append(areaTotal)
     registros_ruas.append((numeroRuas1, numeroRuas2))
     registros_pulverizacao.append((pulverizacao1, pulverizacao2))
+    registros_area_pulverizada.append(area_pulverizada)
 
     print("dados salvos")
 
@@ -53,6 +53,7 @@ ID {i}
 Cultura 1: {c1} | Ruas: {r1} | Pulverização: {p1:.2f} L
 Cultura 2: {c2} | Ruas: {r2} | Pulverização: {p2:.2f} L
 Área total: {registros_area[i]:.2f} m²
+Área pulverizada: {registros_area_pulverizada[i]:.2f} m²
 """)
 
 def atualizar_dados():
@@ -70,6 +71,7 @@ def atualizar_dados():
     registros_area.pop(idx)
     registros_ruas.pop(idx)
     registros_pulverizacao.pop(idx)
+    registros_area_pulverizada.pop(idx)
 
     print("Digite os novos dados:")
     entrada_dados()
@@ -89,31 +91,43 @@ def deletar_dados():
     registros_area.pop(idx)
     registros_ruas.pop(idx)
     registros_pulverizacao.pop(idx)
+    registros_area_pulverizada.pop(idx)
 
     print("Registro deletado com sucesso!")
 
 def exportar_csv():
+
+    arquivo = "dados_fazenda.csv"
+
     if len(registros_cultura) == 0:
         print("Nenhum dado para exportar.")
         return
 
-    with open("dados_fazenda.csv", mode="w", newline="") as file:
-        writer = csv.writer(file)
+    arquivo_existe = os.path.isfile(arquivo)
 
-        writer.writerow([
-            "Cultura1", "Cultura2",
-            "AreaTotal",
-            "Ruas1", "Ruas2",
-            "Pulv1", "Pulv2"
-        ])
+    with open(arquivo, "a", newline="") as f:
+        writer = csv.writer(f)
 
+        # cria cabeçalho se o arquivo ainda não existir
+        if not arquivo_existe:
+            writer.writerow([
+                "Cultura1", "Cultura2",
+                "AreaTotal",
+                "AreaPulverizada",
+                "Ruas1", "Ruas2",
+                "Pulv1", "Pulv2"
+            ])
+
+        # percorre os registros e salva no CSV
         for i in range(len(registros_cultura)):
+
             c1, c2 = registros_cultura[i]
             r1, r2 = registros_ruas[i]
             p1, p2 = registros_pulverizacao[i]
             area = registros_area[i]
+            area_pulv = registros_area_pulverizada[i]
 
-            writer.writerow([c1, c2, area, r1, r2, p1, p2])
+            writer.writerow([c1, c2, area, area_pulv, r1, r2, p1, p2])
 
     print("📁 Dados exportados para 'dados_fazenda.csv'")
 
